@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CS 499 Final Portfolio</title>
+    <style>
+       
+    </style>
+</head>
+<body>
+    <h1>CS 499 Computer Science Capstone Portfolio</h1>
+    
+    <div class="self-assessment">
+        <h2 style="margin-top: 0;">Self Assessment</h2>
+        
+        <p>Throughout the Computer Science program at SNHU, I have learned quite a lot about software development. Key experiences include CS 310 where we explored Git workflows and helped teammates when needed, and presenting technical concepts to non technical people in CS 250's software development lifecycle class.</p>
+        
+        <p>My technical foundation was built through courses like CS 260 where I implemented binary search trees from scratch, and CS 340 where I created applications with MongoDB. CS 405 Secure Coding  changed how I write code, now i always consider security vulnerabilities like SQL injection and implement proper input validation.</p>
+        
+        <p>The three artifacts below demonstrate this growth are the Investment Company System, which shows my software design skills through the Singleton pattern, the Collection Testing Suite which proves my understanding of different data structures, and the SQL Injection Protection project highlights my security knowledge. Together, they showcase my ability to perform all of the course outcomes</p>
+    </div>
+    
+    
+    <div class="project">
+        <h2>Project 1: Investment Company System (Software Design)</h2>
+        <p>This started as code from a reverse engineering assignment in CS 405. The original had global variables everywhere and was really hard to follow.</p>
+        
+        <p>Implemented the Singleton design pattern to clean everything up. Instead of having name1, name2, var1, var2 etc scattered around, I created a proper class structure.</p>
+        
+        <pre>
+// Original code
+string name1 = "Bob Jones";
+string name2 = "Sarah Davis";
+int var1 = 1;  // service choice
+int var2 = 1;
+
+// enhancement
+class InvestmentCompany {
+private:
+    static InvestmentCompany* instance;
+    struct Client {
+        string name;
+        int serviceOption;
+    };
+    Client clients[5];
+};</pre>
+        
+        <p> I can take bad code and refactor it using proper design patterns. The singleton ensures only one instance exists which makes sense for this system.</p>
+    </div>
+    
+    <div class="project">
+        <h2>Project 2: Collection Testing Suite (Data Structures)</h2>
+        <p> Had a Google Test suite that tested std::vector operations. Needed to make it work with std::array instead.</p>
+        
+        <p> Arrays have fixed size so you cannot just push_back() like with vectors</p>
+        
+        <pre>
+// replace vector with std:array 
+template<size_t MaxSize = 100>
+class CollectionTest : public ::testing::Test {
+    std::unique_ptr<std::array<int, MaxSize>> collection;
+    size_t element_count; 
+    
+    void add_entries(int count) {
+        // no longer using vector, so cant use push_back
+        for (int i = 0; i < count; i++) {
+            (*collection)[element_count++] = rand() % 100;
+        }
+    }
+};</pre>
+        
+        <p>The data structure to be used really depends on goal time complexeties and size of the data we are processing.</p>
+    </div>
+    
+    <div class="project">
+        <h2>Project 3: SQL Injection Defense (Database Security)</h2>
+        <p> Original code from CS 405 only checked for "OR" to prevent SQL injection</p>
+        
+        <p>
+        <ul>
+            <li>Added detection for common attack patterns (1=1, --, /**/)</li>
+            <li>Implemented input validation</li>
+            <li>Used prepared statements </li>
+        </ul>
+        
+        <pre>
+// use prepared statements
+bool run_safe_query(sqlite3* db, const string& username) {
+    sqlite3_stmt* stmt;
+    const char* sql = "SELECT * FROM USERS WHERE NAME = ?";
+    
+    sqlite3_prepare_v2(db, sql, -1, &stmt, 0);
+    sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_STATIC);
+    
+  
+}</pre>
+        
+        <p>A more secure approach to protect against real SQL injection attempts</p>
+    </div>
+    
+	<p style="font-weight: bold;">Conclusion</p>
+    <p>These projects taught me that there are always enhancements we can make to our older projects and work. These enhancements help test our understanding of particular subjects and allow us to grow as developers </p>
+    
+    
+</body>
+</html>
